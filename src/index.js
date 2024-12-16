@@ -38,14 +38,23 @@ class Email {
       delete config.juiceOptions;
     }
 
+    debug('config.juiceResources %O', config.juiceResources);
+    console.log('config.juiceResources', config.juiceResources);
+
     if (config.disableJuice) {
       config.juice = false;
       delete config.disableJuice;
     }
 
+    debug('config.juice %O', config.juice);
+    console.log('config.juice', config.juice);
+
     if (config.render) {
       config.customRender = true;
     }
+
+    debug('config.customRender %O', config.customRender);
+    console.log('config.customRender', config.customRender);
 
     this.config = _.merge(
       {
@@ -108,11 +117,20 @@ class Email {
       config
     );
 
+    debug('merged config %O', this.config);
+    console.log('merged config', this.config);
+
     // override existing method
     this.render = this.config.render;
 
+    debug('config.transport %O', this.config.transport);
+    console.log('config.transport', this.config.transport);
+
     if (!_.isFunction(this.config.transport.sendMail))
       this.config.transport = nodemailer.createTransport(this.config.transport);
+
+    debug('transport created');
+    console.log('transport created');
 
     debug('transformed config %O', this.config);
     console.log('transformed config', this.config);
